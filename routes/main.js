@@ -7,7 +7,6 @@ router
     res.render("chat/main", {})
 })
 .use('/chat', require('./chat'))
-.use('/test', require('./test'))
 .use('/mongo', require('./mongo'))
 
 module.exports = router
