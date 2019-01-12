@@ -4,7 +4,7 @@ const router = require('express').Router()
 
 router
 .get('/', (req, res) => {
-    res.render("chat/main", {})
+    res.redirect('/chat')
 })
 .use('/chat', require('./chat'))
 .use('/mongo', require('./mongo'))

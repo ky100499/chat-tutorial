@@ -3,6 +3,9 @@
 const router = require('express').Router()
 
 router
+.get('/', (req, res) => {
+    res.render("chat/main", {})
+})
 .get('/:room_no', (req, res) => {
     res.render("chat/room", {
         'room_no': req.params.room_no
