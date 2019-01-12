@@ -1,0 +1,32 @@
+<% include ../core/header %>
+
+<!-- Page Content -->
+<div class="container" style="padding-bottom: 20px;">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h2>MongoDB Tutorial</h2>
+            <p class="lead">Delete</p>
+
+            <% if (typeof data === "undefined" ? undefined : data) {
+                for(let i = 0; i < data.length; i++) { %>
+                <a href="#;" onclick="del('<%= data[i]._id %>'); return false" class="no-deco"><pre><%= JSON.stringify(data[i], null, 4) %></pre></a>
+                <% }
+            } %>
+        </div>
+    </div>
+</div><!-- /.container -->
+
+<style>
+    a.no-deco:hover, a.no-deco:focus {
+        text-decoration: none;
+    }
+</style>
+
+<script>
+    function del(id) {
+        if (confirm("데이터를 삭제하시겠습니까?"))
+            location.href = "/mongo/delete/" + id
+    }
+</script>
+
+<% include ../core/footer %>

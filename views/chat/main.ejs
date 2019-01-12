@@ -1,0 +1,19 @@
+<% include ../core/header %>
+
+<!-- Page Content -->
+<div class="container" style="padding-bottom: 20px;">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h2>채팅방 보기</h2>
+            <p class="lead">ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇ</p>
+
+            <div class="list-group limit-width text-left">
+                <% for (var i = 1; i <= 1; i++) { %>
+                    <a href="/chat/<%= i %>" class="list-group-item list-group-item-action">채널<%= i %></a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div><!-- /.container -->
+
+<% include ../core/footer %>

@@ -1,0 +1,32 @@
+<% include ../core/header %>
+
+<div id="wrap">
+    <div id="inner">
+        asdfasdf<br>
+        asdfasdf<br>
+        asdfasdf<br>
+        asdfasdf<br>
+    </div>
+</div>
+
+<style>
+    #wrap {
+        width: 1000px;
+        height: 300px;
+        border: 1px solid black;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    #inner {
+        border: 1px solid red;
+        height: 100%;
+        transition: height 1s ease;
+        overflow: hidden;
+    }
+    #wrap:not(:hover) > #inner {
+        height: 0px;
+    }
+</style>
+
+<% include ../core/footer %>

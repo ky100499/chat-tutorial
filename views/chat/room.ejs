@@ -1,0 +1,94 @@
+<% include ../core/header %>
+
+<div class="container" style="padding-bottom: 70px; height: 100%;">
+    <div class="row" style="height: 100%;">
+        <div class="col-lg-12 text-center" style="height: 100%;">
+            <h2>채팅</h2>
+            <p class="lead"><%= room_no %>번 방</p>
+
+            <div id="chat-wrap"></div>
+        </div>
+    </div>
+</div>
+<div id="chat-input-wrap" class="container">
+    <div class="input-group">
+        <textarea class="form-control" id="chat-input" rows="1" tabindex="1" autofocus></textarea>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="send()">전송</button>
+        </span>
+    </div>
+</div>
+
+<style>
+    body {
+        height: 100vh !important;
+    }
+</style>
+<script>
+    let shiftPressed = false;
+
+    function send() {
+        let message = document.getElementById("chat-input").value.trim();
+        if (message.length == 0) return false;
+        document.getElementById("chat-input").value = "";
+        socket.emit("message", message);
+
+        addMessage({'msg': message}, true);
+    }
+
+    function addMessage(data, isMine=false) {
+        let chat = document.createElement('div'),
+            msg = document.createElement('div'),
+            name
+
+        if (!isMine) {
+            name = document.createElement('div')
+            name.className = "chat-name"
+            name.innerText = data.name
+            chat.appendChild(name)
+        } else {
+            chat.className = "chat-mine"
+        }
+
+        msg.className = "chat-message"
+        msg.innerText = data.msg
+
+        chat.appendChild(msg)
+
+        document.getElementById("chat-wrap").appendChild(chat)
+
+        $("#chat-wrap").scrollTop(2147483647)
+    }
+
+    $(document).ready(() => {
+        let name = "";
+        while (name.length == 0) {
+            name = prompt("이름").trim();
+        }
+        socket.emit('join', {
+            'room_name': params[1],
+            'client_name': name
+        })
+
+        document.getElementById("chat-input").addEventListener('keyup', e => {
+            if (e.key == "Shift") {
+                shiftPressed = false;
+            }
+            if (!shiftPressed && e.key == "Enter") {
+                e.preventDefault();
+                send();
+            }
+        });
+        document.getElementById("chat-input").addEventListener('keydown', e => {
+            if (e.key == "Shift") {
+                shiftPressed = true;
+            }
+        });
+    })
+
+    socket.on('message', data => {
+        addMessage(data);
+    })
+</script>
+
+<% include ../core/footer %>

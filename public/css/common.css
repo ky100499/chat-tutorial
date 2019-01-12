@@ -1,0 +1,131 @@
+/* Google Early Access Fonts */
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+/* Font Block */
+*:not(.fa) {
+    font-family: "Helvetica Neue", Helvetica, "Apple SD Gothic Neo", "Noto Sans KR", "Nanum Gothic", sans-serif !important;
+}
+/* Font Block End */
+
+/* Visibility by Screen Width Block */
+@media screen and (min-width: 768px) {
+    .mobile {
+        display: none;
+    }
+    .navbar ul.right {
+        float: right;
+    }
+}
+@media screen and (max-width: 767px) {
+    .pc {
+        display: none;
+    }
+}
+/* Visibility by Screen Width Block End */
+
+/* Sticky Footer Block */
+html {
+    position: relative;
+    min-height: 100vh;
+}
+body {
+    /* Padding top by navbar height */
+    padding-top: 70px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+.footer .container .text-muted {
+    margin: 20px 0;
+}
+/* Sticky Footer Block End */
+
+/* Horizontal Line in Navbar Block */
+.navbar hr {
+    margin: 5px -5px;
+}
+.navbar-default hr {
+    border-color: #d5d5d5;
+}
+.navbar-inverse hr {
+    border-color: #777;
+}
+/* Horizontal Line in Navbar Block End */
+
+/*
+** Additional CSS Block
+*/
+body > div.container {
+    position: relative;
+}
+
+.no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.limit-width {
+    max-width: 550px;
+    margin: 0 auto 20px;
+}
+
+.table * {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#chat-wrap {
+    height: calc(100% - 112px);
+    text-align: left;
+    overflow-y: scroll;
+}
+#chat-wrap > div {
+    margin: 5px;
+}
+#chat-wrap .chat-mine {
+    text-align: right;
+}
+#chat-wrap .chat-name {
+    padding: 0px 5px 5px;
+}
+#chat-wrap .chat-message {
+    background-color: lightgray;
+    padding: 5px 10px;
+    border-radius: 5px;
+    max-width: 80%;
+    display: inline-block;
+    text-align: left;
+
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+#chat-input-wrap {
+    position: absolute;
+    bottom: 70px;
+    width: 100%;
+}
+#chat-input-wrap > div {
+    width: calc(100% - 30px);
+    margin: 0 auto;
+}
+#chat-input-wrap textarea {
+    resize: none;
+}
+
+pre {
+    text-align: left;
+}
+/*
+** Additional CSS Block End
+*/
