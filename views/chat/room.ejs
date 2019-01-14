@@ -33,12 +33,17 @@
         document.getElementById("chat-input").value = "";
         socket.emit("message", message);
 
-        addMessage({'msg': message}, true);
+        addMessage({
+            'msg': message,
+            'date': Date.now()
+        }, true);
     }
 
     function addMessage(data, isMine=false) {
-        let chat = document.createElement('div'),
+        let date = new Date(data.date),
+            chat = document.createElement('div'),
             msg = document.createElement('div'),
+            time = document.createElement('div'),
             name
 
         if (!isMine) {
@@ -53,11 +58,17 @@
         msg.className = "chat-message"
         msg.innerText = data.msg
 
+        time.className = "chat-time"
+        time.innerText = (date.getHours() < 12 ? "오전" : "오후") + " "
+                         + ("0" + (date.getHours() === 12 ? 12 : date.getHours() % 12)).slice(-2) + ":"
+                         + ("0" + date.getMinutes()).slice(-2)
+
         chat.appendChild(msg)
+        chat.appendChild(time)
 
         document.getElementById("chat-wrap").appendChild(chat)
 
-        $("#chat-wrap").scrollTop(2147483647)
+        document.getElementById("chat-wrap").scrollTop = document.getElementById("chat-wrap").scrollHeight
     }
 
     $(document).ready(() => {

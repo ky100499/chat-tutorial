@@ -91,6 +91,8 @@ body > div.container {
 }
 #chat-wrap > div {
     margin: 5px;
+    overflow: hidden;
+    position: relative;
 }
 #chat-wrap .chat-mine {
     text-align: right;
@@ -102,22 +104,45 @@ body > div.container {
     background-color: lightgray;
     padding: 5px 10px;
     border-radius: 5px;
-    max-width: 80%;
+    max-width: calc(80% - 50px);
     display: inline-block;
     text-align: left;
 
     word-wrap: break-word;
     word-break: break-all;
 }
+*:not(.chat-mine) > .chat-message {
+    float: left;
+}
+.chat-mine .chat-message {
+    float: right;
+}
+#chat-wrap .chat-time {
+    width: 100%;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    padding: 0 5px;
+}
+.chat-mine .chat-time {
+    transform: translateX(-100%);
+}
+#chat-wrap .chat-time::after {
+    clear: both;
+}
 
 #chat-input-wrap {
     position: absolute;
-    bottom: 70px;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%)
+}
+@media (max-width: 767px) {
+    #chat-input-wrap {
+        width: 100%;
+    }
 }
 #chat-input-wrap > div {
-    width: calc(100% - 30px);
-    margin: 0 auto;
+    margin: 0 30px;
 }
 #chat-input-wrap textarea {
     resize: none;

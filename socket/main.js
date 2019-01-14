@@ -72,29 +72,10 @@ module.exports = http => {
                 }
             })
 
-            /*
-            let result = {
-                "name": socket.client_name,
-                "msg": data
-            }
-            const FILENAME = HISTORY + socket.room_name + ".txt";
-            fs.readFile(FILENAME, (err, data) => {
-                if (err && err.errno === -2)
-                    console.error(err)
-                else if (err)
-                    console.error(err)
-
-                data = JSON.parse(data ? data.toString() : "[]")
-                data.push(result)
-                fs.writeFile(FILENAME, JSON.stringify(data), err => {
-                    if (err)
-                        console.error(err)
-                })
-            })
-            */
             socket.to(socket.room_name).broadcast.emit('message', {
                 "name": socket.client_name,
-                "msg": data
+                "msg": data,
+                "date": Date.now()
             })
         })
     })
