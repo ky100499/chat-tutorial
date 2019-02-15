@@ -18,6 +18,8 @@ module.exports = http => {
     io.on('connection', socket => {
         console.log("Connected")
 
+        require('./stream')(socket)
+
         socket
         .on('join', data => {
             socket.room_name = data.room_name

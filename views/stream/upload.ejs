@@ -1,0 +1,38 @@
+<% include ../core/header %>
+
+<!-- Page Content -->
+<div class="container" style="padding-bottom: 20px;">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h2>Socket.io Stream Tutorial</h2>
+            <p class="lead">Upload</p>
+
+            <div class="limit-width">
+                <div class="form-group">
+                    <h3 class="text-left">File</h3>
+                    <input type="file" class="form-control" id="ipt-file">
+                </div>
+                <button id="send" class="btn btn-primary btn-block">Submit</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.container -->
+
+<script>
+    document.getElementById("send").onclick = e => {
+        let file = document.getElementById("ipt-file").files[0]
+
+        let stream = ss.createStream()
+
+        console.log(file)
+
+        ss(socket).emit('upload', stream, {
+            'name': file.name,
+            'size': file.size,
+            'type': file.type
+        });
+        ss.createBlobReadStream(file).pipe(stream);
+    }
+</script>
+
+<% include ../core/footer %>
