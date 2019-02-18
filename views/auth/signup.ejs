@@ -1,0 +1,42 @@
+<% include ../core/header %>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="container-fluid limit-width">
+            <h2 class="text-center">회원가입</h2>
+            <%
+                for (let i = 0; i < error.length; i++) {
+                    %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error[i] %>
+                    </div>
+                    <%
+                }
+            %>
+            <form method="post" action="/auth/signup">
+                <div class="form-group">
+                    <h3>이름</h3>
+                    <input type="text" class="form-control" name="name" value="<%= name %>" tabindex="1" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <h3>아이디</h3>
+                    <input type="text" class="form-control" name="id" value="<%= id %>" tabindex="2" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <h3>비밀번호</h3>
+                    <input type="password" class="form-control" name="pwd" value="" tabindex="3">
+                </div>
+                <div class="form-group">
+                    <h3>비밀번호 확인</h3>
+                    <input type="password" class="form-control" name="pwd_check" tabindex="4">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-block btn-primary" value="회원가입">
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- /.container -->
+
+<% include ../core/footer %>

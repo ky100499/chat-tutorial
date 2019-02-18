@@ -72,13 +72,9 @@
     }
 
     $(document).ready(() => {
-        let name = "";
-        while (name.length == 0) {
-            name = prompt("이름").trim();
-        }
         socket.emit('join', {
-            'room_name': params[1],
-            'client_name': name
+            'room_no': '<%= room_no %>',
+            'client_name': '<%= name %>'
         })
 
         document.getElementById("chat-input").addEventListener('keyup', e => {

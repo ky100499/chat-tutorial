@@ -47,14 +47,25 @@
 
             <hr class="mobile">
 
-            <ul class="nav navbar-nav right">
-                <li id="login">
-                    <a href="/">로그인</a>
-                </li>
-                <li id="signup">
-                    <a href="/">회원가입</a>
-                </li>
-            </ul>
+            <% if (user_id.length > 0) { %>
+                <ul class="nav navbar-nav right">
+                    <li id="">
+                        <a href="#;"><%= user_id %></a>
+                    </li>
+                    <li id="">
+                        <a href="/auth/logout">로그아웃</a>
+                    </li>
+                </ul>
+            <% } else { %>
+                <ul class="nav navbar-nav right">
+                    <li id="login">
+                        <a href="/auth/login">로그인</a>
+                    </li>
+                    <li id="signup">
+                        <a href="/auth/signup">회원가입</a>
+                    </li>
+                </ul>
+            <% } %>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container -->
 </nav>

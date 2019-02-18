@@ -22,19 +22,19 @@ module.exports = http => {
 
         socket
         .on('join', data => {
-            socket.room_name = data.room_name
+            socket.room_no = data.room_no
             socket.client_name = data.client_name
-            socket.join(data.room_name, err => {
+            socket.join(data.room_no, err => {
                 if (err)
                     console.error(err)
                 else {
-                    console.log(socket.client_name + " joined to room " + data.room_name)
+                    console.log(socket.client_name + " joined to room " + data.room_no)
                 }
             })
 
             let chat = new Chat()
 
-            chat.room_no = socket.room_name
+            chat.room_no = socket.room_no
             chat.type = "join"
             chat.name = socket.client_name
 
@@ -47,12 +47,12 @@ module.exports = http => {
             })
         })
         .on('disconnect', data => {
-            if (socket.room_name !== undefined) {
-                socket.leave(socket.room_name, err => {
+            if (socket.room_no !== undefined) {
+                socket.leave(socket.room_no, err => {
                     if (err)
                         console.error(err);
                     else {
-                        console.log(socket.client_name + " left the room " + socket.room_name);
+                        console.log(socket.client_name + " left the room " + socket.room_no);
                     }
                 })
             }
@@ -61,7 +61,7 @@ module.exports = http => {
         .on('message', data => {
             let chat = new Chat()
 
-            chat.room_no = socket.room_name
+            chat.room_no = socket.room_no
             chat.type = "msg"
             chat.name = socket.client_name
             chat.msg = data
@@ -74,7 +74,7 @@ module.exports = http => {
                 }
             })
 
-            socket.to(socket.room_name).broadcast.emit('message', {
+            socket.to(socket.room_no).broadcast.emit('message', {
                 "name": socket.client_name,
                 "msg": data,
                 "date": Date.now()

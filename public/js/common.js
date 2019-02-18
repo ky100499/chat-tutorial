@@ -32,8 +32,12 @@ let params;
 $(document).ready(() => {
     params = getURLPath(location.pathname);
     console.log(params);
-    if (params.length)
-        $("li#" + params[0]).addClass("active");
+    if (params.length) {
+        if (params[0] == "auth")
+            $("li#" + params[1]).addClass("active")
+        else
+            $("li#" + params[0]).addClass("active");
+    }
 });
 
 const socket = io();

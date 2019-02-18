@@ -7,5 +7,14 @@
             </p>
         </div>
     </footer>
+    <script>
+        <%
+            for (let i = 0; i < alerts.length; i++) {
+                %>
+                alert("<%= alerts[i] %>")
+                <%
+            }
+        %>
+    </script>
 </body>
 </html>

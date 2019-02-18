@@ -4,8 +4,9 @@ const router = require('express').Router()
 
 router
 .get('/', (req, res) => {
-    res.redirect('/chat')
+    res.redirect(301, '/chat')
 })
+.use('/auth', require('./auth'))
 .use('/chat', require('./chat'))
 .use('/mongo', require('./mongo'))
 .use('/stream', require('./stream'))
