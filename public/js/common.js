@@ -31,7 +31,7 @@ let params;
 
 $(document).ready(() => {
     params = getURLPath(location.pathname);
-    console.log(params);
+    //console.log(params);
     if (params.length) {
         if (params[0] == "auth")
             $("li#" + params[1]).addClass("active")

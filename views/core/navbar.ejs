@@ -27,30 +27,12 @@
                 </li>
             </ul>
 
-            <!--ul class="nav navbar-nav">
-                <li id="jwt">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        Chat
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-header">Custom JWT</li>
-                        <li><a href="/jwt/custom">Main</a></li>
-                        <li><a href="/jwt/custom/delete">Delete Token</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Library</li>
-                        <li><a href="/jwt/lib">Main</a></li>
-                        <li><a href="/jwt/lib/delete">Delete Token</a></li>
-                    </ul>
-                </li>
-            </ul-->
-
             <hr class="mobile">
 
-            <% if (user_id.length > 0) { %>
+            <% if (user_id.length) { %>
                 <ul class="nav navbar-nav right">
                     <li id="">
-                        <a href="#;"><%= user_id %></a>
+                        <a href="#;"><%= user_name %></a>
                     </li>
                     <li id="">
                         <a href="/auth/logout">로그아웃</a>

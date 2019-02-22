@@ -25,56 +25,11 @@
     }
 </style>
 <script>
-    let shiftPressed = false;
-
-    function send() {
-        let message = document.getElementById("chat-input").value.trim();
-        if (message.length == 0) return false;
-        document.getElementById("chat-input").value = "";
-        socket.emit("message", message);
-
-        addMessage({
-            'msg': message,
-            'date': Date.now()
-        }, true);
-    }
-
-    function addMessage(data, isMine=false) {
-        let date = new Date(data.date),
-            chat = document.createElement('div'),
-            msg = document.createElement('div'),
-            time = document.createElement('div'),
-            name
-
-        if (!isMine) {
-            name = document.createElement('div')
-            name.className = "chat-name"
-            name.innerText = data.name
-            chat.appendChild(name)
-        } else {
-            chat.className = "chat-mine"
-        }
-
-        msg.className = "chat-message"
-        msg.innerText = data.msg
-
-        time.className = "chat-time"
-        time.innerText = (date.getHours() < 12 ? "오전" : "오후") + " "
-                         + ("0" + (date.getHours() === 12 ? 12 : date.getHours() % 12)).slice(-2) + ":"
-                         + ("0" + date.getMinutes()).slice(-2)
-
-        chat.appendChild(msg)
-        chat.appendChild(time)
-
-        document.getElementById("chat-wrap").appendChild(chat)
-
-        document.getElementById("chat-wrap").scrollTop = document.getElementById("chat-wrap").scrollHeight
-    }
-
     $(document).ready(() => {
         socket.emit('join', {
             'room_no': '<%= room_no %>',
-            'client_name': '<%= name %>'
+            'client_name': '<%= user_name %>',
+            'user_idx': '<%= user_idx %>'
         })
 
         document.getElementById("chat-input").addEventListener('keyup', e => {
@@ -93,8 +48,64 @@
         });
     })
 
+    let shiftPressed = false;
+
+    function send() {
+        let message = document.getElementById("chat-input").value.trim();
+        if (message.length == 0) return false;
+        document.getElementById("chat-input").value = "";
+        socket.emit("message", message);
+
+        addMessage({
+            'msg': message,
+            'date': Date.now()
+        }, true);
+    }
+
+    function addMessage(data, isMine=false, prepend=false) {
+        let date = new Date(data.date),
+            chat = document.createElement('div'),
+            msg = document.createElement('div'),
+            time = document.createElement('div')
+
+        if (!isMine) {
+            let name = document.createElement('div')
+            name.className = "chat-name"
+            name.innerText = data.name
+            chat.appendChild(name)
+        } else {
+            chat.className = "chat-mine"
+        }
+
+        msg.className = "chat-message"
+        msg.innerText = data.msg
+
+        time.className = "chat-time"
+        time.innerText = (date.getHours() < 12 ? "오전" : "오후") + " "
+                         + ("0" + (date.getHours() === 12 ? 12 : date.getHours() % 12)).slice(-2) + ":"
+                         + ("0" + date.getMinutes()).slice(-2)
+
+        chat.appendChild(msg)
+        chat.appendChild(time)
+
+        if (prepend) {
+            document.getElementById("chat-wrap").prepend(chat)
+        } else {
+            document.getElementById("chat-wrap").appendChild(chat)
+        }
+
+        document.getElementById("chat-wrap").scrollTop = document.getElementById("chat-wrap").scrollHeight
+    }
+
     socket.on('message', data => {
         addMessage(data);
+    })
+
+    socket.on('history', data => {
+        for (let i = 0; i < data.length; i++) {
+            console.log(data[i].user_idx == '<%= user_idx %>')
+            addMessage(data[i], data[i].user_idx == '<%= user_idx %>', true)
+        }
     })
 </script>
 

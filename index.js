@@ -25,9 +25,11 @@ app.engine('html', require('ejs').renderFile)
 app.use(express.static('public'))
 
 app.use((req, res, next) => {
+    // console.log("Session: ", req.session)
+    if (!req.session.isRedirected) {
+        req.session.alerts = []
+    }
     res.locals.alerts = req.session.alerts ? req.session.alerts : []
-    req.session.alerts = []
-    //console.log(res.locals.alerts)
     next()
 })
 
@@ -36,7 +38,24 @@ app.use((req, res, next) => {
     res.locals.user_name = req.session.user_name ? req.session.user_name : ""
     res.locals.user_idx = req.session.user_idx ? req.session.user_idx : ""
 
-    console.log(res.locals)
+    next()
+})
+
+app.use((req, res, next) => {
+    req.session.isRedirected = false
+
+    let _redirect = res.redirect
+
+    res.redirect = function(status, url=302) {
+        if (typeof url === 'Number') {
+            temp = status
+            status = url
+            url = temp
+        }
+        req.session.isRedirected = true
+        _redirect.call(this, status, url)
+    }
+
     next()
 })
 

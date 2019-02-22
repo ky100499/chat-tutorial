@@ -4,7 +4,7 @@ const router = require('express').Router()
 
 router
 .get('/', (req, res) => {
-    res.redirect(301, '/chat')
+    res.redirect('/chat')
 })
 .use('/auth', require('./auth'))
 .use('/chat', require('./chat'))

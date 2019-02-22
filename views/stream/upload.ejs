@@ -20,11 +20,26 @@
 
 <script>
     document.getElementById("send").onclick = e => {
-        let file = document.getElementById("ipt-file").files[0]
+        let files = document.getElementById("ipt-file").files
+        for (let i = 0; i < files.length; i++) {
+            uploadImage(files[i])
+        }
+    }
 
+    window.ondragover = e => {
+        e.preventDefault()
+    }
+    window.ondrop = e => {
+        e.preventDefault()
+        console.log("Drop: ", e.dataTransfer.files)
+        let files = e.dataTransfer.files
+        for (let i = 0; i < files.length; i++) {
+            uploadImage(files[i])
+        }
+    }
+
+    function uploadImage(file) {
         let stream = ss.createStream()
-
-        console.log(file)
 
         ss(socket).emit('upload', stream, {
             'name': file.name,
