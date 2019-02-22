@@ -7,7 +7,7 @@ const router = require('express').Router(),
 let db = mongoose.connection
 db.on('error', console.error)
 db.once('open', () => {
-    console.log("Connected to mongod server")
+    console.log("Connected to mongod server - /routes/auth")
 })
 
 mongoose.connect('mongodb://localhost/chat', {useNewUrlParser: true})
@@ -15,6 +15,15 @@ mongoose.connect('mongodb://localhost/chat', {useNewUrlParser: true})
 let User = require('../../models/user')
 
 router
+.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error(err)
+        } else {
+            res.redirect('/')
+        }
+    })
+})
 .get('/login', (req, res) => {
     res.render("auth/login", {
         'error': [],
@@ -23,23 +32,29 @@ router
 })
 .post('/login', (req, res) => {
     User.find({'id': req.body.id}, (err, data) => {
+        let errors = []
+
         if (err) {
             console.error(err)
+            errors.push("Error while logging in")
         } else {
             if (data[0].pwd === crypto.createHash('sha512').update(req.body.pwd).digest('hex')) {
                 req.session.alerts.push('로그인 되었습니다')
-                req.session.user_id = data.id
-                req.session.user_name = data.name
-                req.session.user_idx = data._id
-                res.redirect(301, '/')
+                req.session.user_id = data[0].id
+                req.session.user_name = data[0].name
+                req.session.user_idx = data[0]._id
             } else {
-                res.render("auth/login", {
-                    'error': [
-                        '일치하는 회원정보가 없습니다.'
-                    ],
-                    'id': req.body.id
-                })
+                errors.push('일치하는 회원정보가 없습니다.')
             }
+        }
+
+        if (errors.length) {
+            res.render("auth/login", {
+                'error': errors,
+                'id': req.body.id
+            })
+        } else {
+            res.redirect('/')
         }
     })
 })

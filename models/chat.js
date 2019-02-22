@@ -6,6 +6,7 @@ let chatSchema = new mongoose.Schema({
     room_no: Number,
     type: String,
     name: String,
+    user_idx: String,
     msg: String,
     date: {
         type: Date,
